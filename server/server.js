@@ -16,6 +16,22 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+
+        //Sends only to this socket
+        socket.emit('newMessage', {
+            from: 'Admin',
+            text: 'Welcome to the chat app',
+            createdAt: new Date().getTime()
+        });
+
+        //Sends to everyone but this socket
+        socket.broadcast.emit('newMessage', {
+            from: 'Admin',
+            text: 'New user joined',
+            createdAt: new Date().getTime()
+        });
+
+        //Sends to everyone
         io.emit('newMessage', {
             from: message.from,
             text: message.text,
