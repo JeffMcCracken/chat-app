@@ -3,11 +3,6 @@ var socket = io(); //Opening request from client to server
 //Connecting to server
 socket.on('connect', function () {
     console.log('Connected to server');
-
-    socket.emit('createMessage', {
-        to: 'jenn@example.com',
-        text: 'Hey. This is Jeff.'
-    });
 });
 
 //Disconnecting to server
