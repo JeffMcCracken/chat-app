@@ -21,19 +21,21 @@ io.on('connection', (socket) => {
     //Sends to everyone but sending socket
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-    //Listener
+    //Create message listener
     socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
 
         //Sends to everyone
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback('This is from the server.');
+        callback();
     });
 
+    //Create location message listener
     socket.on('createLocationMessage', (coords) => {
         io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
     });
 
+    //Disconnect listener
     socket.on('disconnect', () => {
         console.log('User was disconnected');
     })
